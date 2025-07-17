@@ -3,18 +3,13 @@ import React from 'react'
 import FormInput from '@/components/form/FormInput'
 import { SubmitButton } from '@/components/form/Buttons'
 import FormContainer from '@/components/form/FormContainer'
+import { createProfileAcction } from '@/actions/action'
 
 
 
 
 const CreateProfile = () => {
-    // ຈຳລອງ ເສີມເວີ
-    const createProfileAcction = async ( previousState:any, formData: FormData) => {
-        'use server'
-        const firstname = formData.get('firstname') as String
-        console.log('kljdoahsidoa', firstname)
-        return { message:"Create profile Success"}
-    }
+
 
 
 
@@ -31,7 +26,7 @@ const CreateProfile = () => {
                             placeholder='First name'
                         />
                         <FormInput
-                            name='lastName'
+                            name='lastname'
                             label='Lastname'
                             type='text'
                             placeholder='Last Name'

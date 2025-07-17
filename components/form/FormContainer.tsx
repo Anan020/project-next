@@ -1,5 +1,6 @@
 'use client'
 
+import { actionFunction } from '@/utils/types';
 import React, { useEffect } from 'react'
 import { useActionState } from "react";
 import { toast } from "sonner"
@@ -9,13 +10,11 @@ const initaiState = {
     message: ''
 }
 
-interface FormContainerProps {
-    children: React.ReactNode;
-    className: string;
-    action: any
-}
 
-const FormContainer = ({ action, children, className }: FormContainerProps) => {
+
+
+
+const FormContainer = ({ action, children, className }: {action:actionFunction, children: React.ReactNode,className: string}) => {
     const [state, FromAction] = useActionState(action, initaiState)
     console.log('State ja', state)
 
