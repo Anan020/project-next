@@ -4,12 +4,16 @@ import FormInput from '@/components/form/FormInput'
 import { SubmitButton } from '@/components/form/Buttons'
 import FormContainer from '@/components/form/FormContainer'
 import { createProfileAcction } from '@/actions/action'
+import { currentUser } from '@clerk/nextjs/server'
+import { redirect } from "next/navigation"
 
 
 
 
-const CreateProfile = () => {
+const CreateProfile = async() => {
 
+    const user =await currentUser()
+    if(user?.privateMetadata.hashProfile) redirect('/')
 
 
 
@@ -20,19 +24,19 @@ const CreateProfile = () => {
                 <FormContainer action={createProfileAcction} className='border p-8 rounded-sm max-w-lg'>
                     <div className='grid md:grid-cols-2 gap-4 mt-4'>
                         <FormInput
-                            name="firstname"
+                            name="firstName"
                             type="text"
                             label="First Name"
                             placeholder='First name'
                         />
                         <FormInput
-                            name='lastname'
+                            name='lastName'
                             label='Lastname'
                             type='text'
                             placeholder='Last Name'
                         />
                         <FormInput
-                            name='username'
+                            name='userName'
                             label='User Name'
                             type='text'
                             placeholder='User Name'

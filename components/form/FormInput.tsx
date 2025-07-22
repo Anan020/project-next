@@ -14,8 +14,8 @@ type FormInputProps = {
 const FormInput = (props: FormInputProps) => {
     const { name, type, label, defaultValue, placeholder } = props
     return (
-        <div >
-            <Label htmlFor={'name'}>{label}e</Label>
+        <div>
+            <Label htmlFor={'name'} className='py-2'>{label}</Label>
             <Input
                 name={name}
                 type={type}

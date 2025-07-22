@@ -14,7 +14,7 @@ const initaiState = {
 
 
 
-const FormContainer = ({ action, children, className }: {action:actionFunction, children: React.ReactNode,className: string}) => {
+const FormContainer = ({ action, children,}: {action:actionFunction, children: React.ReactNode }) => {
     const [state, FromAction] = useActionState(action, initaiState)
     console.log('State ja', state)
 
@@ -28,7 +28,7 @@ const FormContainer = ({ action, children, className }: {action:actionFunction, 
 
 
     return (
-        <form action={FromAction} className={className}>
+        <form action={FromAction}>
             {children}
         </form>
     )

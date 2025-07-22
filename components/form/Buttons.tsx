@@ -25,7 +25,10 @@ export const SubmitButton = ({ className, size, text }: SubmitButtonPrpos) => {
 
         {
             pending
-            ? <RotateCw className="animate-spin"/> 
+            ? <>
+            <RotateCw className="animate-spin"/> 
+            <span>Please wait...</span>
+            </>
             : text
         }
         
