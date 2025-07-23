@@ -7,7 +7,10 @@ const nextConfig: NextConfig = {
       bodySizeLimit:'5mb'
     }
   },
-  reactStrictMode:false
+  reactStrictMode:false,
+    images: {
+    remotePatterns: [new URL('https://res.cloudinary.com/dzas0wusp/image/upload/v1753188876/uploads/*')],
+  },
 };
 
 export default nextConfig;
