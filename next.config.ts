@@ -9,7 +9,7 @@ const nextConfig: NextConfig = {
   },
   reactStrictMode:false,
     images: {
-    remotePatterns: [new URL('https://res.cloudinary.com/dzas0wusp/image/upload/v1753188876/uploads/*')],
+    remotePatterns: [new URL('https://res.cloudinary.com/**')],
   },
 };
 

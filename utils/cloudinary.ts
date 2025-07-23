@@ -12,7 +12,8 @@ export async function uploadFile(image: File) {
             cloudinary.uploader.upload_stream({
                 resource_type: "auto",
                 folder: 'uploads',
-                public_id: `${Date.now()}_${image.name}`
+                public_id: `${Date.now()}_${image.name}`,
+                context:'cache-control=public, max-age=3600'
             }, (error, result) => {
                 if (error) rejects(error)
                 else resolve(result as UploadApiResponse)

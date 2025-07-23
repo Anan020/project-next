@@ -5,6 +5,7 @@ import { clerkClient, currentUser } from '@clerk/nextjs/server'
 import db from '@/utils/db'
 import { redirect } from "next/navigation"
 import { uploadFile } from "@/utils/cloudinary"
+import { revalidatePath } from "next/cache"
 
 
 
@@ -112,4 +113,56 @@ export const fetchLandmark = async(
     })
 
     return landmarks
+};
+
+
+export const fetchFavoriteId = async({landmarkId}:{landmarkId:string})=>{
+    const user = await getAuthUser()
+    const Favorite = await db.favorite.findFirst({
+        where:{
+            landmarkId:landmarkId,
+            profileId:user.id
+        },
+        select:{
+            id:true
+        }
+    })
+
+    return Favorite?.id || null
+};
+
+
+export const ToggleFavoriteAction = async(previousState:{
+    favoriteId:string | null,
+    landmarkId:string,
+    pathName:string,
+})=>{
+const { favoriteId, landmarkId, pathName } = previousState
+try{
+    //Delate
+    const user = await getAuthUser()
+    if(favoriteId){
+        await db.favorite.delete({
+            where:{
+                id:favoriteId
+            }
+        })
+    }else{
+    //Create
+        await db.favorite.create({
+            data:{
+                landmarkId:landmarkId,
+                profileId:user.id,
+            }
+        })
+    }
+    revalidatePath(pathName)
+    return {message:favoriteId 
+        ? "Removed favorite Success" 
+        : "Add favorite Success" }
+    
+}
+catch(error){
+    return renderError(error)
+}
 }
