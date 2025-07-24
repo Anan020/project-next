@@ -6,7 +6,7 @@ const ImageInput = () => {
     const name = "image"
   return (
     <div>
-        <Label>
+        <Label className="capitalize py-2">
             {name}
         </Label>
         <Input 

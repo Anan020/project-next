@@ -16,7 +16,7 @@ const initaiState = {
 
 const FormContainer = ({ action, children,}: {action:actionFunction, children: React.ReactNode }) => {
     const [state, FromAction] = useActionState(action, initaiState)
-    console.log('State ja', state)
+    // console.log('State ja', state)
 
 
     useEffect(() => {

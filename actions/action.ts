@@ -81,15 +81,15 @@ export const createLandmarkAction = async (previousState: any, formData: FormDat
         const fulPath = await uploadFile(validatedFile.image)
         const data = await fulPath.json()
         const ImagePath = data.url
-        console.log("สะบายดี",ImagePath)
+        console.log("สะบายดี", ImagePath)
 
-     
+
         //Step3 Insert to db
         await db.landmark.create({
             data: {
                 ...validatedField,
-                image:ImagePath,
-                profileId:user.id
+                image: ImagePath,
+                profileId: user.id
             }
         })
 
@@ -102,13 +102,13 @@ export const createLandmarkAction = async (previousState: any, formData: FormDat
     redirect('/')
 }
 
-export const fetchLandmark = async(
+export const fetchLandmark = async (
     //search
-)=>{
+) => {
     //code body
     const landmarks = await db.landmark.findMany({
-        orderBy:{
-            createdAt:'desc'
+        orderBy: {
+            createdAt: 'desc'
         }
     })
 
@@ -116,15 +116,15 @@ export const fetchLandmark = async(
 };
 
 
-export const fetchFavoriteId = async({landmarkId}:{landmarkId:string})=>{
+export const fetchFavoriteId = async ({ landmarkId }: { landmarkId: string }) => {
     const user = await getAuthUser()
     const Favorite = await db.favorite.findFirst({
-        where:{
-            landmarkId:landmarkId,
-            profileId:user.id
+        where: {
+            landmarkId: landmarkId,
+            profileId: user.id
         },
-        select:{
-            id:true
+        select: {
+            id: true
         }
     })
 
@@ -132,37 +132,68 @@ export const fetchFavoriteId = async({landmarkId}:{landmarkId:string})=>{
 };
 
 
-export const ToggleFavoriteAction = async(previousState:{
-    favoriteId:string | null,
-    landmarkId:string,
-    pathName:string,
-})=>{
-const { favoriteId, landmarkId, pathName } = previousState
-try{
-    //Delate
-    const user = await getAuthUser()
-    if(favoriteId){
-        await db.favorite.delete({
-            where:{
-                id:favoriteId
-            }
-        })
-    }else{
-    //Create
-        await db.favorite.create({
-            data:{
-                landmarkId:landmarkId,
-                profileId:user.id,
-            }
-        })
+export const ToggleFavoriteAction = async (previousState: {
+    favoriteId: string | null,
+    landmarkId: string,
+    pathName: string,
+}) => {
+    const { favoriteId, landmarkId, pathName } = previousState
+    try {
+        //Delate
+        const user = await getAuthUser()
+        if (favoriteId) {
+            await db.favorite.delete({
+                where: {
+                    id: favoriteId
+                }
+            })
+        } else {
+            //Create
+            await db.favorite.create({
+                data: {
+                    landmarkId: landmarkId,
+                    profileId: user.id,
+                }
+            })
+        }
+        revalidatePath(pathName)
+        return {
+            message: favoriteId
+                ? "Removed favorite Success"
+                : "Add favorite Success"
+        }
+
     }
-    revalidatePath(pathName)
-    return {message:favoriteId 
-        ? "Removed favorite Success" 
-        : "Add favorite Success" }
-    
+    catch (error) {
+        return renderError(error)
+    }
 }
-catch(error){
-    return renderError(error)
-}
+
+
+export const fetchFavorits = async()=>{
+
+    const user = await getAuthUser()
+    const favorites = await db.favorite.findMany({
+        where:{
+            profileId:user.id
+        },
+        select:{
+            landmark:{
+                select:{
+                    id:true,
+                    name:true,
+                    description:true,
+                    category:true,
+                    lat:true,
+                    lng:true,
+                    province:true,
+                    price:true,
+                    image:true,
+
+                }
+            }
+        }
+    })
+
+    return favorites.map((favorite)=>favorite.landmark)
 }

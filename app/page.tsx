@@ -1,12 +1,14 @@
+import LoadingCard from '@/components/card/LoadingCard'
 import LandmarkContainer from '@/components/home/LandmarkContainer'
-import { Button } from '@/components/ui/button'
 import React from 'react'
-
+import { Suspense } from 'react'
 const Homepage = () => {
   //search
   return (
     <>
-      <LandmarkContainer/>
+      <Suspense fallback={<LoadingCard/>}>
+        <LandmarkContainer />
+      </Suspense>
     </>
   )
 }
