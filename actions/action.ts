@@ -6,6 +6,7 @@ import db from '@/utils/db'
 import { redirect } from "next/navigation"
 import { uploadFile } from "@/utils/cloudinary"
 import { revalidatePath } from "next/cache"
+import { number } from "zod"
 
 
 
@@ -104,9 +105,16 @@ export const createLandmarkAction = async (previousState: any, formData: FormDat
 
 export const fetchLandmark = async (
     //search
+    {search = ''}:{search?:string}
 ) => {
     //code body
     const landmarks = await db.landmark.findMany({
+        where:{
+            OR:[
+                {name: {contains:search , }},
+                {description: {contains:search , }},                    
+            ]
+        },
         orderBy: {
             createdAt: 'desc'
         }

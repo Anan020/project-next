@@ -6,8 +6,8 @@ import Hero from "../hero/Hero"
 
 
 
-const LandmarkContainer = async() => {
-    const landmarks:landmarkCardProps[] = await fetchLandmark()
+const LandmarkContainer = async({search = ''}:{search?:string}) => {
+    const landmarks:landmarkCardProps[] = await fetchLandmark({search})
     // console.log(landmarks)
   return (
    <div>
