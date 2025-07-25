@@ -105,11 +105,12 @@ export const createLandmarkAction = async (previousState: any, formData: FormDat
 
 export const fetchLandmark = async (
     //search
-    {search = ''}:{search?:string}
+    {search = '', category}:{search?:string, category?:string}
 ) => {
     //code body
     const landmarks = await db.landmark.findMany({
         where:{
+            category,
             OR:[
                 {name: {contains:search , }},
                 {description: {contains:search , }},                    
