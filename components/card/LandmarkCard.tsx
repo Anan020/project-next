@@ -2,11 +2,13 @@ import Image from "next/image"
 import { landmarkCardProps } from "@/utils/types"
 import LandmarkRating from "./LandmarkRating"
 import FavoriteTogleButton from "./FavoriteTogleButton"
+import Link from "next/link"
 
 const LandmarkCard = ({ landmark }: { landmark: landmarkCardProps }) => {
   const { name, image, id, province, lat, lng, price, category, description } = landmark
   return (
     <article className="group relative">
+      <Link href={`/landmark/${id}`}>
 
       <div className="relative h-[300px] riunded-md mb-2">
         <Image
@@ -35,6 +37,7 @@ const LandmarkCard = ({ landmark }: { landmark: landmarkCardProps }) => {
       <div className="absolute top-5 right-5">
         <FavoriteTogleButton landmarkId={id}/>
       </div>
+      </Link>
 
     </article>
   )
