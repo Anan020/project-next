@@ -21,7 +21,7 @@ const LandmarkContainer = async({search , category}:{search?:string, category?:s
     <CategoryList search={search} category={category}/>
     {
       landmarks.length === 0
-      ? <EmtyList/>
+      ? <EmtyList heading="No resulats" btnText="Clear Filters"/>
       : <LandmarkList landmarks={landmarks}/>
     }
    
