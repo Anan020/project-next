@@ -59,7 +59,7 @@ const MapLandmark = ({ Location }: { Location?: { lat: number; lng: number } }) 
       />
       
       <MapContainer
-        className='h-[50vh] rounded-lg mt-2 z-0 relative'
+        className='h-[50vh] rounded-lg mt-2 z-0 relative mb-4'
         center={Location || defaultLocation}
         zoom={12}
         scrollWheelZoom={false}>

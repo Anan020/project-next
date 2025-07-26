@@ -1,6 +1,9 @@
 import { fetchLandmarkDetail } from "@/actions/action"
 import FavoriteTogleButton from "@/components/card/FavoriteTogleButton"
 import Breadcrums from "@/components/landmark/Breadcrums"
+import Description from "@/components/landmark/Description"
+import ImageContainer from "@/components/landmark/ImageContainer"
+import MapLandmark from "@/components/map/Maplandmarks"
 import { redirect } from "next/navigation"
 
 const landmarkDetail = async({params}:{ params:{ id: string }}) => {
@@ -21,6 +24,17 @@ const landmarkDetail = async({params}:{ params:{ id: string }}) => {
           <FavoriteTogleButton landmarkId={landmark.id}/>
         </div>
       </header>
+    {/* Image */}
+    <ImageContainer 
+    mainImage={landmark.image} 
+    name={landmark.name}/>
+    {/* Detail */}
+    <section>
+      <div>
+        <Description description={landmark.description}/>
+        <MapLandmark Location={{lat:landmark.lat,lng:landmark.lng}}/>
+      </div>
+    </section>
     </section>
   )
 }
